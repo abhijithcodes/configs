@@ -24,8 +24,8 @@ format = " took [$duration]($style)"
 
 [directory]
 truncation_length = 8
-style = "bg:#FFFF00 fg:#000000"
-format = "[](bg:#000000 fg:#FFFF00)[ $path ]($style)[ ](bg:#000000 fg:#FFFF00)[$lock_symbol]($lock_style)"
+style = "bg:cyan fg:black"
+format = "[](bg:#000000 fg:cyan)[ $path ]($style)[ ](bg:#000000 fg:cyan)[$lock_symbol]($lock_style)"
 
 [directory.substitutions]
 "~/Documents" = "󰈙"
