@@ -1,0 +1,99 @@
+CHAT-GPT
+============
+Here are ANSI escape codes for text formatting, listed in order for ease of reference:
+
+Text Formatting:
+-----------------------
+Reset: \x1b[0m (resets all formatting)
+Bold: \x1b[1m
+Dim/Faint: \x1b[2m (may not be widely supported)
+Italic: \x1b[3m (support varies across terminals)
+Underline: \x1b[4m
+Blink: \x1b[5m (may blink text in some terminals)
+Inverse (Swap Background/Foreground): \x1b[7m
+Hidden: \x1b[8m (hides text, might not be supported in all terminals)
+
+
+Foreground Colors:
+--------------------
+Black: \x1b[30m
+Red: \x1b[31m
+Green: \x1b[32m
+Yellow: \x1b[33m
+Blue: \x1b[34m
+Magenta: \x1b[35m
+Cyan: \x1b[36m
+White: \x1b[37m
+
+
+Background Colors:
+---------------------
+Black: \x1b[40m
+Red: \x1b[41m
+Green: \x1b[42m
+Yellow: \x1b[43m
+Blue: \x1b[44m
+Magenta: \x1b[45m
+Cyan: \x1b[46m
+White: \x1b[47m
+
+Bright Foreground Colors:
+--------------------------
+Bright Black: \x1b[30;1m or \x1b[90m
+Bright Red: \x1b[31;1m or \x1b[91m
+Bright Green: \x1b[32;1m or \x1b[92m
+Bright Yellow: \x1b[33;1m or \x1b[93m
+Bright Blue: \x1b[34;1m or \x1b[94m
+Bright Magenta: \x1b[35;1m or \x1b[95m
+Bright Cyan: \x1b[36;1m or \x1b[96m
+Bright White: \x1b[37;1m or \x1b[97m
+
+
+Bright Background Colors:
+----------------------------
+Bright Black: \x1b[40;1m or \x1b[100m
+Bright Red: \x1b[41;1m or \x1b[101m
+Bright Green: \x1b[42;1m or \x1b[102m
+Bright Yellow: \x1b[43;1m or \x1b[103m
+Bright Blue: \x1b[44;1m or \x1b[104m
+Bright Magenta: \x1b[45;1m or \x1b[105m
+Bright Cyan: \x1b[46;1m or \x1b[106m
+Bright White: \x1b[47;1m or \x1b[107m
+
+
+Cursor Movement:
+------------------
+Move cursor up: \x1b[{n}A (Moves the cursor up n lines)
+Move cursor down: \x1b[{n}B (Moves the cursor down n lines)
+Move cursor forward: \x1b[{n}C (Moves the cursor forward n characters)
+Move cursor backward: \x1b[{n}D (Moves the cursor backward n characters)
+Set cursor position: \x1b[{line};{column}H (Moves the cursor to line line and column column)
+Save cursor position: \x1b[s (Saves the current cursor position)
+Restore saved cursor position: \x1b[u (Restores the cursor position saved with \x1b[s)
+
+
+Clear Screen:
+--------------------
+Clear screen: \x1b[2J (Clears the entire screen)
+Clear screen from cursor to end: \x1b[0J (Clears from the cursor position to the end of the screen)
+Clear screen from cursor to beginning: \x1b[1J (Clears from the cursor position to the beginning of the screen)
+Clear current line: \x1b[2K (Clears the current line)
+Clear line from cursor to end: \x1b[0K (Clears from the cursor position to the end of the line)
+Clear line from cursor to beginning: \x1b[1K (Clears from the cursor position to the beginning of the line)
+
+
+Scroll:
+-------------
+Scroll up: \x1b[{n}S (Scrolls up n lines)
+Scroll down: \x1b[{n}T (Scrolls down n lines)
+
+
+Erase Characters:
+--------------------
+Erase n characters: \x1b[{n}X (Erases n characters to the right of the cursor)
+
+
+Other:
+----------
+Set title: \x1b]2;{title}\x07 (Sets the terminal window title to {title})
+Enable/disable line wrapping: \x1b[7h (Enable), \x1b[7l (Disable)

@@ -1,17 +1,21 @@
 # ~/.config/starship.toml
 
-command_timeout = 3000
+command_timeout = 8000
+# right format is currently not supported by pwsh
+# right_format = """$time"""
+
 
 [battery]
 full_symbol = "🔋"
 charging_symbol = "🔌"
-discharging_symbol = "⚡"
+discharging_symbol = "⚡ "
 
 [[battery.display]]
-threshold = 30
+threshold = 40
 style = "bold red"
 
 [character]
+success_symbol = '[ ➜](bold green) '
 error_symbol = "[✖](bold red) "
 
 [cmd_duration]
@@ -20,12 +24,18 @@ format = " took [$duration]($style)"
 
 [directory]
 truncation_length = 8
-style = "bg:yellow fg:black"
-format = "[$path]($style)[$lock_symbol]($lock_style) "
+style = "bg:#FFFF00 fg:#000000"
+format = "[](bg:#000000 fg:#FFFF00)[ $path ]($style)[ ](bg:#000000 fg:#FFFF00)[$lock_symbol]($lock_style)"
+
+[directory.substitutions]
+"~/Documents" = "󰈙"
+"~/Sources" = ""
+"~" = " "
+"/" = "  "
 
 [git_branch]
 format = " [$symbol$branch]($style) "
-symbol = "🍣 "
+symbol = "  "
 style = "bold yellow"
 
 [git_commit]
@@ -37,15 +47,15 @@ format = '[\($state( $progress_current of $progress_total)\)]($style) '
 
 [git_status]
 conflicted = "⚔️ "
-ahead = "🏎️ 💨 ×${count}"
-behind = "🐢 ×${count}"
-diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
-untracked = "🛤️  ×${count}"
+ahead = "🏎️ 💨 ×${count} "
+behind = "🐢 ×${count} "
+diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count} "
+untracked = "🛤️  ×${count} "
 stashed = "📦 "
-modified = "📝 ×${count}"
-staged = "🗃️  ×${count}"
-renamed = "📛 ×${count}"
-deleted = "🗑️  ×${count}"
+modified = "📝 ×${count} "
+staged = "🗃️  ×${count} "
+renamed = "📛 ×${count} "
+deleted = "🗑️  ×${count} "
 style = "bright-white"
 format = "$all_status$ahead_behind"
 
@@ -58,7 +68,7 @@ disabled = true
 
 
 [memory_usage]
-format = "$symbol[${ram}( | ${swap})]($style) "
+format = " $symbol[${ram}( | ${swap})]($style) "
 threshold = 70
 style = "bold dimmed white"
 disabled = false
@@ -74,6 +84,10 @@ style = "bold green"
 format = "[$symbol$version]($style) "
 style = "bold green"
 
+[golang]
+symbol = "  "
+format = "[$symbol$version]($style) "
+
 [time]
 time_format = "%h %d %a %R"
 format = "🕙 $time($style) "
@@ -85,4 +99,11 @@ style_user = "bold dimmed blue"
 show_always = false
 
 [nodejs]
-format = "via [🤖 $version](bold green) "
+format = " via [🤖 $version](bold green) "
+
+# Clear visibility for exit codes
+[status]
+style = "bg:red"
+symbol = "  "
+format = '[\[$symbol$status\]]($style) '
+disabled = false
