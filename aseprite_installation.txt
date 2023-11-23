@@ -1,0 +1,39 @@
+can't use mingw64 so didnt use that, cmake also didnt try with it so, removed both from path first
+
+download the aseprite source using github extracted to D:/aseprite
+
+in the cmakelists.txt, add this line 
+
+set(CMAKE_CXX_COMPILER "D:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.38.33130/bin/Hostx64/x64/cl.exe")
+
+to set the compiler to my version, note the version number will change if i update visual studio
+
+also had to extract ninja compiler and set binary path variable, also had to extract precompiled deps/skia
+
+installation
+===========
+
+open cmd
+
+call "D:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VsDevCmd.bat" -arch=x64
+
+d:
+
+cd aseprite
+
+mkdir build
+
+cd build
+
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DLAF_BACKEND=skia -DSKIA_DIR=D:\deps\skia -DSKIA_LIBRARY_DIR=D:\deps\skia\out\Release-x64 -DSKIA_LIBRARY=D:\deps\skia\out\Release-x64\skia.lib -G Ninja ..
+
+ninja aseprite
+
+*****************************
+
+installation complete
+
+difficulties faced
+===================
+I only had one difficulty because of my error. I installed asperite main source code in a different directory and then created an empty directory aseprite and then tried to run cmake from inside it, cmake kept complaining about not finding any cmakelist files, cus ofcourse they were not there in empty directory
+also that two dots at the end of the cmake command means to go up two directories and check for cmakefiles
