@@ -1,0 +1,86 @@
+Invoke-Expression (&starship init powershell)
+
+function GoToWork {
+    param (
+        [string]$FolderName
+    )
+    
+    # Define the base path
+    $BasePath = "D:\vscodefolder"
+    
+    # Create the full path by combining the base path and provided folder name
+    $FullPath = Join-Path -Path $BasePath -ChildPath $FolderName
+    
+    # Check if the directory exists
+    if (Test-Path -Path $FullPath -PathType Container) {
+        # Navigate to the directory
+        Set-Location -Path $FullPath
+    } else {
+        Write-Host "Directory '$FolderName' not found in '$BasePath'."
+    }
+}
+
+Set-Alias -Name gtw -Value GoToWork
+
+function Remove-RecursiveForce {
+    param (
+        [string]$Path
+    )
+    
+    # Use Remove-Item with -Recurse and -Force parameters
+    Remove-Item -Path $Path -Recurse -Force
+}
+
+Set-Alias -Name rif -Value Remove-RecursiveForce
+
+
+function GoUpOne {
+    Set-Location -Path ..
+}
+
+Set-Alias -Name up1 -Value GoUpOne
+
+function GoUpTwo {
+    Set-Location -Path ../..
+}
+
+Set-Alias -Name up2 -Value GoUpTwo
+
+
+function Git-AddCommit {
+    param (
+        [string]$Message
+    )    
+    
+    # Add all files to the staging area
+    git add .
+    
+    # Commit the changes with the provided message
+    git commit -m $Message
+}
+
+Set-Alias -Name gimmit -Value Git-AddCommit
+
+function Edit-Pwsh-Profile {
+    $PwshProfilePath = Join-Path -Path "$HOME\Documents\PowerShell" -ChildPath "Profile.ps1"
+    
+    if (Test-Path -Path $PwshProfilePath) {
+        hx $PwshProfilePath
+    } else {
+        Write-Host "Profile.ps1 not found in '$HOME\Documents\PowerShell'."
+    }
+}
+
+
+Set-Alias -Name pwsh-profile -Value Edit-Pwsh-Profile
+
+function Edit-Helix-Languages {
+    $HelixLangPath = Join-Path -Path "$HOME\AppData\Roaming\helix" -ChildPath "languages.toml"
+    if (Test-Path -Path $HelixLangPath) {
+        hx $HelixLangPath
+    } else {
+        Write-Host "languages.toml not found in '$HOME\AppData\Roaming\helix'."
+    }
+}
+
+Set-Alias -Name helix-lang -Value Edit-Helix-Languages 
