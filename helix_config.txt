@@ -1,4 +1,4 @@
-theme = "tokyonight"
+theme = "nightfox"
 
 [editor]
 bufferline = "always"
@@ -22,3 +22,18 @@ j = "normal_mode"
 [keys.normal]
 C-s = ":w"
 C-z = "save_selection"
+C-k = "kill_to_line_end"
+
+# by default all these commands select text, so collapse_selection is used to unselect
+# but ; key does the same job , so I think I will stick with the default behavior
+# yet selection mode plus movement seems logical
+
+# w = ["move_next_word_start", "collapse_selection"]
+# b = ["move_prev_word_start", "collapse_selection"]
+# e = ["move_next_word_end", "collapse_selection"]
+# W = ["move_next_long_word_start", "collapse_selection"]
+# B = ["move_prev_long_word_start", "collapse_selection"]
+# E = ["move_next_word_end", "collapse_selection"]
+# t = ["find_till_char", "collapse_selection"]
+# f = ["find_next_char", "collapse_selection"]
+
