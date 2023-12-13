@@ -1,3 +1,6 @@
+# to get vscode lang servers use this npm package
+# https://www.npmjs.com/package/vscode-langservers-extracted
+
 [language-server]
 deno = { command = "deno", args = ["lsp"] }
 # taplo = { command = "taplo", args = ["lsp", "stdio"] }
@@ -19,17 +22,33 @@ name = "tsx"
 language-servers = ["deno"]
 auto-format = true
 
+
 [[language]]
 name = "html"
-language-servers = ["vscode-html-language-server"]
+scope = "text.html.basic"
+injection-regex = "html"
+file-types = ["html", "htm", "shtml", "xhtml", "xht", "jsp", "asp", "aspx", "jshtm", "volt", "rhtml"]
+language-servers = [ "vscode-html-language-server" ]
 formatter = { command = 'prettier', args = ["--parser", "html"] }
 auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "html"
+source = { git = "https://github.com/tree-sitter/tree-sitter-html", rev = "29f53d8f4f2335e61bf6418ab8958dac3282077a" }
 
 [[language]]
 name = "css"
-language-servers = ["vscode-css-language-server"]
-formatter = { command = 'prettier', args = ["--parser", "css"] }
+scope = "source.css"
+injection-regex = "css"
+file-types = ["css", "scss"]
+language-servers = [ "vscode-css-language-server" ]
 auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "css"
+source = { git = "https://github.com/tree-sitter/tree-sitter-css", rev = "769203d0f9abe1a9a691ac2b9fe4bb4397a73c51" }
 
 # [[language]]
 # name = "toml"
