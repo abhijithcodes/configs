@@ -49,15 +49,16 @@ format = '[\($state( $progress_current of $progress_total)\)]($style) '
 conflicted = "⚔️ "
 ahead = "🏎️ 💨 ×${count} "
 behind = "🐢 ×${count} "
+untracked = "🛤  × ${count} "
 diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count} "
-untracked = "🛤️  ×${count} "
 stashed = "📦 "
-modified = "📝 ×${count} "
-staged = "🗃️  ×${count} "
-renamed = "📛 ×${count} "
-deleted = "🗑️  ×${count} "
-style = "bright-white"
+modified = "📝 × ${count} "
+staged = "🗃️  × ${count} "
+renamed = "📛 × ${count} "
+deleted = "🗑️  × ${count} "
+style = "fg:black"
 format = "$all_status$ahead_behind"
+
 
 [hostname]
 ssh_only = false
@@ -100,6 +101,11 @@ show_always = false
 
 [nodejs]
 format = " via [🤖 $version](bold green) "
+
+[vlang]
+symbol = "  "
+format = "via [$symbol$version]($style) "
+
 
 # Clear visibility for exit codes
 [status]

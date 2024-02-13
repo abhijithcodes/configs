@@ -1,15 +1,16 @@
-# to get vscode lang servers use this npm package
-# https://www.npmjs.com/package/vscode-langservers-extracted
+
+use-grammars = { only = [ "html"] }
 
 [language-server]
 deno = { command = "deno", args = ["lsp"] }
-# taplo = { command = "taplo", args = ["lsp", "stdio"] }
 vscode-css-language-server = { command = "vscode-css-language-server", args = ["--stdio"], config = { provideFormatter = true, css = { validate = { enable = true } } } }
 vscode-html-language-server = { command = "vscode-html-language-server", args = ["--stdio"], config = { provideFormatter = true } }
 vscode-json-language-server = { command = "vscode-json-language-server", args = ["--stdio"], config = { provideFormatter = true, json = { validate = { enable = true } } } }
 pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
 clangd = { command = "clangd", args = ["--query-driver=D:/mingw64/bin"] }
 ltex-ls = { command = "ltex-ls"}
+omnisharp = { command = "OmniSharp", args = [ "--languageserver" ], timeout=50 }
+csharp-ls = { command = "csharp-ls" }
 
 [language-server.rust-analyzer]
 command = "rust-analyzer"
@@ -30,7 +31,7 @@ injection-regex = "html"
 file-types = ["html", "htm", "shtml", "xhtml", "xht", "jsp", "asp", "aspx", "jshtm", "volt", "rhtml"]
 language-servers = [ "vscode-html-language-server" ]
 formatter = { command = 'prettier', args = ["--parser", "html"] }
-auto-format = true
+auto-format = false
 indent = { tab-width = 2, unit = "  " }
 
 [[grammar]]
@@ -49,11 +50,6 @@ indent = { tab-width = 2, unit = "  " }
 [[grammar]]
 name = "css"
 source = { git = "https://github.com/tree-sitter/tree-sitter-css", rev = "769203d0f9abe1a9a691ac2b9fe4bb4397a73c51" }
-
-# [[language]]
-# name = "toml"
-# language-servers = ["taplo"]
-# auto-format = true
 
 [[language]]
 name = "json"
@@ -117,6 +113,8 @@ scope = "source.gotmpl"
 injection-regex = "gotmpl"
 file-types = ["gotmpl", "tmpl"]
 comment-token = "//"
+formatter = { command = 'prettier', args = ["--parser", "html"] }
+auto-format = true
 language-servers = [ "gopls" ]
 indent = { tab-width = 2, unit = " " }
 
@@ -232,3 +230,50 @@ indent = { tab-width = 4, unit = "\t" }
 [[grammar]]
 name = "make"
 source = { git = "https://github.com/alemuller/tree-sitter-make", rev = "a4b9187417d6be349ee5fd4b6e77b4172c6827dd" }
+
+
+[[language]]
+name = "c-sharp"
+scope = "source.csharp"
+injection-regex = "c-?sharp"
+file-types = ["cs", "csx", "cake"]
+roots = ["sln", "csproj"]
+comment-token = "//"
+indent = { tab-width = 4, unit = "\t" }
+language-servers = [ "omnisharp" ]
+
+[language.debugger]
+name = "netcoredbg"
+transport = "tcp"
+command = "netcoredbg"
+args = [ "--interpreter=vscode" ]
+port-arg = "--server={}"
+
+[[language.debugger.templates]]
+name = "launch"
+request = "launch"
+completion = [ { name = "path to dll", completion = "filename" } ]
+args = { type = "coreclr", console = "internalConsole", internalConsoleOptions = "openOnSessionStart", program = "{0}" }
+
+[[language.debugger.templates]]
+name = "attach"
+request = "attach"
+completion = [ "pid" ]
+args = { processId = "{0}" }
+
+[[grammar]]
+name = "c-sharp"
+source = { git = "https://github.com/tree-sitter/tree-sitter-c-sharp", rev = "5b60f99545fea00a33bbfae5be956f684c4c69e2" }
+
+
+[[language]]
+name = "htmldjango"
+scope = "source.htmldjango"
+file-types = []
+roots = []
+auto-format = true
+formatter = { command = "djlint", args = ["-", "--reformat", "--quiet"] }
+
+[[grammar]]
+name = "htmldjango"
+source = { git = "https://github.com/interdependence/tree-sitter-htmldjango" , rev = "b2dba02eddab66be669022320273d0dfe1ff923d" }

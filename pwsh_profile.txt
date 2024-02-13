@@ -84,3 +84,68 @@ function Edit-Helix-Languages {
 }
 
 Set-Alias -Name helix-lang -Value Edit-Helix-Languages 
+
+function Gcc-Out-Flags {
+    param([string]$FileName)
+
+    # Extract just the file name without the path
+    $CleanedFileName = Split-Path -Leaf $FileName
+    
+    # set the executable name using regex
+    $ExecutableName = $CleanedFileName -replace '\..*', '.exe'
+    
+    # run the gpp command with some flags
+    gcc -Wall -Wextra -g $CleanedFileName -o $ExecutableName
+}
+
+Set-Alias -Name gccout -Value Gcc-Out-Flags
+
+function Gpp-Out-Flags {
+    param([string]$FileName)
+
+    # Extract just the file name without the path
+    $CleanedFileName = Split-Path -Leaf $FileName
+    
+    # set the executable name using regex
+    $ExecutableName = $CleanedFileName -replace '\..*', '.exe'
+    
+    # run the gpp command with some flags
+    g++ -Wall -Wextra -g $CleanedFileName -o $ExecutableName
+}
+
+Set-Alias -Name g++out -Value Gpp-Out-Flags
+
+function move-prog-book {
+    param(
+        [string]$fileName,
+        [string]$directoryName
+    )
+    
+     if (-not $fileName) {
+        Write-Host "Please provide a filename."
+        return
+    }
+    
+    $rootDirectory = "D:\textbooks\programming"
+    
+    
+     if (-not $directoryName) {
+        $destinationPath = $rootDirectory
+    } else {
+        $destinationPath = Join-Path -Path $rootDirectory -ChildPath $directoryName
+    }
+    
+    if (-not (Test-Path -Path $destinationPath)) {
+        Write-Host "Destination Path '$destinationPath' is not valid."
+        return
+    }
+    
+    $filePath = Join-Path -Path $pwd -ChildPath $fileName
+
+    if (Test-Path -Path $filePath) {
+        Move-Item -Path $filePath -Destination $destinationPath
+        Write-Host "File '$fileName' moved to '$destinationPath'"
+    } else {
+        Write-Host "File '$fileName' not found in the current directory."
+    }
+}

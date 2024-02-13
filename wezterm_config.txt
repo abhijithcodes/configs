@@ -1,0 +1,161 @@
+-- Pull in the wezterm API
+local wezterm = require 'wezterm'
+
+-- for workspace keybindings
+local act = wezterm.action
+wezterm.on('update-right-status', function(window, pane)
+  window:set_right_status(window:active_workspace())
+end)
+
+-- This will hold the configuration.
+local config = wezterm.config_builder()
+
+-- This is where you actually apply your config choices
+
+-- For example, changing the color scheme:
+--config.color_scheme = 'Catppuccin Frappe'
+-- or Macchiato, Frappe, Latte, Mocha
+
+-- Create a custom color scheme based on Catppuccin Mocha
+-- local custom = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
+-- custom.background = "#000000"
+-- custom.tab_bar.background = "#040404"
+-- custom.tab_bar.inactive_tab.bg_color = "#0f0f0f"
+-- custom.tab_bar.new_tab.bg_color = "#080808"
+
+-- Add the custom color scheme to the config
+-- config.color_schemes = {
+--   ["OLEDppuccin"] = custom,
+-- }
+
+-- Apply the custom powershell color scheme
+-- local scheme = wezterm.get_builtin_color_schemes()['Powershell (Gogh)']
+-- scheme.foreground = '#30ff00'
+-- scheme.background = '#000000'
+-- config.color_schemes = {
+-- Override builtin wez color scheme
+--   ['Powershell (Gogh)'] = scheme,
+-- }
+-- config.color_scheme = "Powershell (Gogh)"
+
+-- Apply custom Wez color scheme
+local scheme = wezterm.color.get_builtin_schemes()['Wez']
+
+scheme.foreground = '#30ff00'
+scheme.background = '#000000'
+config.color_schemes = {
+  -- Override builtin wez color scheme
+  ['Wez'] = scheme,
+}
+config.color_scheme = "Wez"
+
+-- set font size
+config.font_size = 13
+
+-- Spawn a fish shell in login mode
+config.default_prog = { 'pwsh' }
+
+-- disabling default keybindings
+config.disable_default_key_bindings = true
+
+-- Adding keybinding
+config.leader = { key = 'Space', mods = 'SHIFT' } --adding a leader key
+config.keys = {
+  -- leader configs
+  { key = 'h',          mods = 'LEADER',     action = act.SplitHorizontal },
+  { key = 'v',          mods = 'LEADER',     action = act.SplitVertical },
+  { key = 'w',          mods = 'LEADER',     action = act.CloseCurrentTab { confirm = true } },
+  { key = 'x',          mods = 'LEADER',     action = act.CloseCurrentPane { confirm = true } },
+  { key = 't',          mods = 'LEADER',     action = act.SpawnTab("CurrentPaneDomain") },
+  { key = 'r',          mods = 'LEADER',     action = act.ActivatePaneDirection("Right") },
+  { key = 'l',          mods = 'LEADER',     action = act.ActivatePaneDirection("Left") },
+  { key = 'u',          mods = 'LEADER',     action = act.ActivatePaneDirection("Up") },
+  { key = 'd',          mods = 'LEADER',     action = act.ActivatePaneDirection("Down") },
+  { key = 'p',          mods = 'LEADER',     action = act.ActivateTabRelative(-1) },
+  { key = 'n',          mods = 'LEADER',     action = act.ActivateTabRelative(1) },
+
+  -- other configs
+  { key = 'p',          mods = 'CTRL|SHIFT', action = act.ActivateCommandPalette },
+  { key = 'l',          mods = 'CTRL|ALT',   action = act.ShowDebugOverlay },
+  { key = 'l',          mods = 'ALT',        action = act.ShowLauncher },
+  { key = 'UpArrow',    mods = 'CTRL|SHIFT', action = act.AdjustPaneSize { "Up", 1 } },
+  { key = 'DownArrow',  mods = 'CTRL|SHIFT', action = act.AdjustPaneSize { "Down", 1 } },
+  { key = 'LeftArrow',  mods = 'CTRL|SHIFT', action = act.AdjustPaneSize { "Left", 1 } },
+  { key = 'RightArrow', mods = 'CTRL|SHIFT', action = act.AdjustPaneSize { "Right", 1 } },
+  { key = '=',          mods = 'CTRL',       action = act.IncreaseFontSize },
+  { key = '-',          mods = 'CTRL',       action = act.DecreaseFontSize },
+  { key = '0',          mods = 'CTRL',       action = act.ResetFontSize },
+  {key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo("Clipboard")},
+  {key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom("Clipboard")},
+
+  -- workspace configs
+  {
+    key = 'd',
+    mods = 'ALT',
+    action = act.SwitchToWorkspace {
+      name = 'default',
+    },
+  },
+  {
+    key = 's',
+    mods = 'ALT',
+    action = act.ShowLauncherArgs {
+      flags = 'FUZZY|WORKSPACES',
+    },
+  },
+  -- Prompt for a name to use for a new workspace and switch to it.
+  {
+    key = 'n',
+    mods = 'ALT',
+    action = act.PromptInputLine {
+      description = wezterm.format {
+        { Attribute = { Intensity = 'Bold' } },
+        { Foreground = { AnsiColor = 'Fuchsia' } },
+        { Text = 'Enter name for new workspace' },
+      },
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          window:perform_action(
+            act.SwitchToWorkspace {
+              name = line,
+            },
+            pane
+          )
+        end
+      end),
+    },
+  },
+
+  {
+    key = 'F11',
+    action = wezterm.action.ToggleFullScreen,
+  },
+  -- Switch to a monitoring workspace
+  -- {
+  --   key = 'u',
+  --   mods = 'CTRL|SHIFT',
+  --   action = act.SwitchToWorkspace {
+  --     name = 'workspace2',
+  --spawn = {
+  --args = { 'top' }, -- top is a linux command(task manager), by default pwsh will be opened
+  --},
+  --   },
+  -- },
+  -- Create a new workspace with a random name and switch to it
+  -- { key = 'i', mods = 'CTRL|SHIFT', action = act.SwitchToWorkspace },
+  -- Show the launcher in fuzzy selection mode and have it list all workspaces
+  -- and allow activating one.
+}
+
+-- toggle maximise on startup
+local mux = wezterm.mux
+wezterm.on('gui-startup', function(pwsh)
+  local tab, pane, window = mux.spawn_window(pwsh or {})
+  window:gui_window():maximize()
+end)
+-- and finally, return the configuration to wezterm
+
+return config
