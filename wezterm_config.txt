@@ -10,6 +10,20 @@ end)
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
+-- set cursor shape
+config.default_cursor_style = "SteadyUnderline"
+
+-- set font
+config.font = wezterm.font ('Fira Code Retina', {weight="Regular"})
+
+--set padding to zero
+config.window_padding = {
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
+}
+
 -- This is where you actually apply your config choices
 
 -- config.color_scheme = "Matrix (terminal.sexy)"
@@ -44,7 +58,13 @@ config.color_scheme = "Homebrew"
 -- config.color_scheme = "Wez"
 
 -- set font size
-config.font_size = 13
+-- this font size of 12 and line height of 1 wil minimise bottom padding
+-- otherwise there is some bottom padding
+-- okay changed to font_size 13 and line_height 0.9 which also works
+-- font_size 14 and line_height 1.1 also works
+
+config.font_size = 14
+config.line_height = 1.1
 
 -- Spawn a fish shell in login mode
 config.default_prog = { 'pwsh' }
@@ -53,7 +73,7 @@ config.default_prog = { 'pwsh' }
 config.disable_default_key_bindings = true
 
 -- Adding keybinding
-config.leader = { key = 'Space', mods = 'SHIFT' } --adding a leader key
+config.leader = { key = 'Space', mods = 'CTRL' } --adding a leader key
 config.keys = {
   -- leader configs
   { key = 'h',          mods = 'LEADER',     action = act.SplitHorizontal },
@@ -79,8 +99,8 @@ config.keys = {
   { key = '=',          mods = 'CTRL',       action = act.IncreaseFontSize },
   { key = '-',          mods = 'CTRL',       action = act.DecreaseFontSize },
   { key = '0',          mods = 'CTRL',       action = act.ResetFontSize },
-  {key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo("Clipboard")},
-  {key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom("Clipboard")},
+  { key = 'c',          mods = 'CTRL|SHIFT', action = act.CopyTo("Clipboard") },
+  { key = 'v',          mods = 'CTRL|SHIFT', action = act.PasteFrom("Clipboard") },
 
   -- workspace configs
   {
@@ -128,20 +148,34 @@ config.keys = {
     action = wezterm.action.ToggleFullScreen,
   },
   -- Switch to ubuntu workspace
-   {
-     key = 'u',
-     mods = 'ALT',
-     action = act.SwitchToWorkspace {
-       name = 'ubuntu',
-  spawn = {
-  args = { 'ubuntu' }, -- top is a linux command(task manager), by default pwsh will be opened
-  },
+  {
+    key = 'u',
+    mods = 'ALT',
+    action = act.SwitchToWorkspace {
+      name = 'ubuntu',
+      spawn = {
+        args = { 'ubuntu' }, -- top is a linux command(task manager), by default pwsh will be opened
+      },
     },
   },
   -- Create a new workspace with a random name and switch to it
   -- { key = 'i', mods = 'CTRL|SHIFT', action = act.SwitchToWorkspace },
   -- Show the launcher in fuzzy selection mode and have it list all workspaces
   -- and allow activating one.
+}
+config.mouse_bindings = {
+  -- Disable the default click behavior
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "NONE",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  -- Ctrl-click will open the link under the mouse cursor
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "CTRL",
+    action = wezterm.action.OpenLinkAtMouseCursor,
+  },
 }
 
 -- toggle maximise on startup
