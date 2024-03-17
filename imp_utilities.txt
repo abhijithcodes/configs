@@ -1,0 +1,7 @@
+imp utilities to install
+
+fzf - for fuzzy finding
+zoxide - for easy cd commands
+starship, wezterm - for terminals
+sho, fif - clones I made for ls and finding files
+uv - for python package management
