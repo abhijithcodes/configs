@@ -1,4 +1,5 @@
 Invoke-Expression (&starship init powershell)
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 function GoToWork {
     param (
@@ -29,6 +30,7 @@ function Remove-RecursiveForce {
     
     # Use Remove-Item with -Recurse and -Force parameters
     Remove-Item -Path $Path -Recurse -Force
+    Write-Host "'$Path' has been deleted"    
 }
 
 Set-Alias -Name rif -Value Remove-RecursiveForce
@@ -38,7 +40,7 @@ function GoUpOne {
     Set-Location -Path ..
 }
 
-Set-Alias -Name up1 -Value GoUpOne
+Set-Alias -Name up -Value GoUpOne
 
 function GoUpTwo {
     Set-Location -Path ../..
@@ -149,3 +151,41 @@ function move-prog-book {
         Write-Host "File '$fileName' not found in the current directory."
     }
 }
+
+Set-Alias -Name mpg -Value move-prog-book
+
+Set-Alias -Name vim -Value nvim
+
+# to delete multiple directories in a folder
+function Remove-DirectoriesForce {
+    param (
+        [int]$Count
+    )
+
+    # Get the directories in the current directory
+    $directories = Get-ChildItem -Directory | Select-Object -First $Count
+
+    # Check if there are enough directories
+    if ($directories.Count -lt $Count) {
+        Write-Output "Not enough directories inside this directory"
+        return
+    }
+
+    # Display the list of directories to be deleted
+    Write-Output " > The following directories will be deleted:"
+    $directories | ForEach-Object { $_.FullName }
+
+    # Prompt for confirmation
+    $confirm = Read-Host " > Do you want to proceed with deleting these directories? (Y/N)"
+    if ($confirm -ne "Y" -and $confirm -ne "y") {
+        Write-Output "Operation cancelled."
+        return
+    }
+
+    # Loop through each directory and call Remove-RecursiveForce
+    foreach ($dir in $directories) {
+        Remove-RecursiveForce -Path $dir.FullName
+    }
+}
+
+Set-Alias -Name rifn -Value Remove-DirectoriesForce
