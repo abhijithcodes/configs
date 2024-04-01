@@ -2,15 +2,16 @@
 use-grammars = { only = [ "html"] }
 
 [language-server]
-deno = { command = "deno", args = ["lsp"] }
+deno-lsp = { command = "deno", args = ["lsp"]}
 vscode-css-language-server = { command = "vscode-css-language-server", args = ["--stdio"], config = { provideFormatter = true, css = { validate = { enable = true } } } }
 vscode-html-language-server = { command = "vscode-html-language-server", args = ["--stdio"], config = { provideFormatter = true } }
 vscode-json-language-server = { command = "vscode-json-language-server", args = ["--stdio"], config = { provideFormatter = true, json = { validate = { enable = true } } } }
 pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
 clangd = { command = "clangd", args = ["--query-driver=D:/mingw64/bin"] }
 ltex-ls = { command = "ltex-ls"}
-omnisharp = { command = "OmniSharp", args = [ "--languageserver" ], timeout=50 }
-csharp-ls = { command = "csharp-ls" }
+#omnisharp = { command = "OmniSharp", args = [ "--languageserver" ], timeout=50 }
+csharp-ls = { command = "csharp-ls", timeout=10000 }
+haskell-language-server = { command = "haskell-language-server-wrapper", args = ["--lsp"] }
 
 [language-server.rust-analyzer]
 command = "rust-analyzer"
@@ -20,7 +21,7 @@ command = "gopls"
 
 [[language]]
 name = "tsx"
-language-servers = ["deno"]
+language-servers = ["deno-lsp"]
 auto-format = true
 
 
@@ -53,17 +54,17 @@ source = { git = "https://github.com/tree-sitter/tree-sitter-css", rev = "769203
 
 [[language]]
 name = "json"
-language-servers = ["deno"]
+language-servers = ["deno-lsp"]
 auto-format = true
 
 [[language]]
 name = "typescript"
-language-servers = ["deno"]
+language-servers = ["deno-lsp"]
 auto-format = true
 
 [[language]]
 name = "javascript"
-language-servers = ["deno"]
+language-servers = ["deno-lsp"]
 auto-format = true
 
 [[language]]
@@ -97,7 +98,7 @@ source = { git = "https://github.com/tree-sitter/tree-sitter-go", rev = "64457ea
 name = "gomod"
 scope = "source.gomod"
 injection-regex = "gomod"
-file-types = ["go.mod"]
+file-types = [{glob = "go.mod"}]
 auto-format = true
 comment-token = "//"
 language-servers = [ "gopls" ]
@@ -126,7 +127,7 @@ source = { git = "https://github.com/dannylongeuay/tree-sitter-go-template", rev
 name = "gowork"
 scope = "source.gowork"
 injection-regex = "gowork"
-file-types = ["go.work"]
+file-types = [{glob = "go.work"}]
 auto-format = true
 comment-token = "//"
 language-servers = [ "gopls" ]
@@ -140,27 +141,7 @@ source = { git = "https://github.com/omertuc/tree-sitter-go-work", rev = "6dd9dd
 name = "json"
 scope = "source.json"
 injection-regex = "json"
-file-types = [
-  "json",
-  "jsonc",
-  "arb",
-  "ipynb",
-  "geojson",
-  "gltf",
-  "webmanifest",
-  "flake.lock",
-  ".babelrc",
-  ".bowerrc",
-  ".jscrc",
-  "js.map",
-  "ts.map",
-  "css.map",
-  ".jslintrc",
-  "jsonld",
-  ".vuerc",
-  "composer.lock",
-  ".watchmanconfig"
-]
+file-types =  ["json","jsonc", "arb","ipynb","geojson"]
 roots = []
 language-servers = [ "vscode-json-language-server" ]
 auto-format = true
@@ -174,15 +155,14 @@ auto-format = true
 # config = ""
 
 [language.formatter]
-command = 'black'
-args = ["--quiet", "-"]
-
+command = "ruff"
+args = ["format", "--quiet", "-"] 
 
 [[language]]
 name = "cpp"
 scope = "source.cpp"
 injection-regex = "cpp"
-file-types = ["cc", "hh", "c++", "cpp", "hpp", "h", "ipp", "tpp", "cxx", "hxx", "ixx", "txx", "ino", "C", "H", "cu", "cuh", "cppm", "h++", "ii", "inl", { suffix = ".hpp.in" }, { suffix = ".h.in" }]
+file-types = ["cc", "hh", "c++", "cpp", "hpp", "h", "ipp", "tpp", "cxx", "hxx", "ixx", "txx", "ino", "C", "H", "cu", "cuh", "cppm", "h++", "ii", "inl", { glob = ".hpp.in" }, { glob = ".h.in" }]
 roots = []
 comment-token = "//"
 language-servers = [ "clangd" ]
@@ -240,7 +220,8 @@ file-types = ["cs", "csx", "cake"]
 roots = ["sln", "csproj"]
 comment-token = "//"
 indent = { tab-width = 4, unit = "\t" }
-language-servers = [ "omnisharp" ]
+language-servers = [ "csharp-ls"]
+auto-format = true
 
 [language.debugger]
 name = "netcoredbg"
@@ -277,3 +258,28 @@ formatter = { command = "djlint", args = ["-", "--reformat", "--quiet"] }
 [[grammar]]
 name = "htmldjango"
 source = { git = "https://github.com/interdependence/tree-sitter-htmldjango" , rev = "b2dba02eddab66be669022320273d0dfe1ff923d" }
+
+
+[[language]]
+name = "haskell"
+scope = "source.haskell"
+injection-regex = "haskell"
+file-types = ["hs", "hs-boot"]
+roots = ["Setup.hs", "stack.yaml", "cabal.project"]
+comment-token = "--"
+language-servers = [ "haskell-language-server" ]
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "haskell"
+source = { git = "https://github.com/tree-sitter/tree-sitter-haskell", rev = "d7ac98f49e3ed7e17541256fe3881a967d7ffdd3" }
+
+
+[[language]]
+name = "cabal"
+scope = "source.cabal"
+file-types = [ "cabal" ]
+roots = ["cabal.project", "Setup.hs"]
+indent = { tab-width = 2, unit = "  " }
+comment-token = "--"
+language-servers = [ "haskell-language-server" ]

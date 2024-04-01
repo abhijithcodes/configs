@@ -159,11 +159,28 @@ Set-Alias -Name vim -Value nvim
 # to delete multiple directories in a folder
 function Remove-DirectoriesForce {
     param (
-        [int]$Count
+        [int]$Count,
+        [switch]$SortByName,
+        [switch]$Descending
     )
 
     # Get the directories in the current directory
-    $directories = Get-ChildItem -Directory | Select-Object -First $Count
+    if ($SortByName) {
+        if ($Descending) {
+            $directories = Get-ChildItem -Directory | Sort-Object -Property Name -Descending | Select-Object -First $Count
+        }
+        else {
+            $directories = Get-ChildItem -Directory | Sort-Object -Property Name | Select-Object -First $Count
+        }
+    }
+    else {
+        if ($Descending) {
+            $directories = Get-ChildItem -Directory | Sort-Object -Property LastWriteTime -Descending | Select-Object -First $Count
+        }
+        else {
+            $directories = Get-ChildItem -Directory | Sort-Object -Property LastWriteTime | Select-Object -First $Count
+        }
+    }
 
     # Check if there are enough directories
     if ($directories.Count -lt $Count) {
