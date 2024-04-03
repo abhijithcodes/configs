@@ -1,10 +1,12 @@
 theme = "nightfox"
+# theme = "papercolor-light"
 
 [editor]
 bufferline = "always"
 
 [editor.lsp]
 display-messages = true
+auto-signature-help = true
 
 [editor.soft-wrap]
 enable = true
@@ -27,13 +29,18 @@ J = "normal_mode"
 C-s = ":w"
 C-z = "save_selection"
 C-k = "kill_to_line_end"
+C-e = ":theme everforest_light"
 
 [keys.insert]
 A-w = "delete_char_backward"
 A-d = "delete_char_forward"
 C-d = "delete_word_forward"
+C-s = "save_selection"
 
 [editor.auto-pairs]
 '{' = '}'
 '[' = ']'
 '(' = ')'
+
+[editor.statusline]
+right = ["version-control","diagnostics", "selections", "register", "position", "file-encoding"]
