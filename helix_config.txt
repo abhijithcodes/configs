@@ -32,10 +32,13 @@ C-k = "kill_to_line_end"
 C-e = ":theme everforest_light"
 
 [keys.insert]
-A-w = "delete_char_backward"
-A-d = "delete_char_forward"
-C-d = "delete_word_forward"
+C-i = "delete_char_backward"
+C-o = "delete_char_forward"
+C-d = "delete_word_backward"
+C-f = "delete_word_forward"
 C-s = "save_selection"
+C-l = "move_char_right"
+C-h = "move_char_left"
 
 [editor.auto-pairs]
 '{' = '}'
