@@ -29,8 +29,15 @@ function Remove-RecursiveForce {
     )
     
     # Use Remove-Item with -Recurse and -Force parameters
-    Remove-Item -Path $Path -Recurse -Force
-    Write-Host "'$Path' has been deleted"    
+    try{
+        # in case of eror don't suppress instead stop and go to catch
+        Remove-Item -Path $Path -Recurse -Force -ErrorAction Stop
+        Write-Host "'$Path' has been deleted"    
+    }
+    catch{
+        # print the error message along with this usig $_
+        Write-Host "Error: Unable to delete '$Path'`n$_"
+    }
 }
 
 Set-Alias -Name rif -Value Remove-RecursiveForce
