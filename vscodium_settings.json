@@ -1,0 +1,67 @@
+{
+    "workbench.startupEditor": "none",
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+      {
+        "before": [
+          "<leader>",
+          "f"
+        ],
+        "commands": [
+          "workbench.files.action.focusFilesExplorer"
+        ]
+      },
+      {
+        "before": [
+          "<leader>",
+          "k"
+        ],
+        "commands": [
+          "editor.action.showHover"
+        ]
+      },
+      {
+        "before": [
+          "<leader>",
+          "p"
+        ],
+        "commands": [
+          "editor.action.formatDocument"
+        ]
+      }
+    ],
+    "vim.handleKeys": {
+      "<C-c>": false,
+      "<C-v>": false,
+      "<C-d>": true,
+      "<C-f>": false,
+      "<C-s>": false,
+      "<C-z>": false,
+      "<C-a>": false,
+      "<C-k>": false,
+      "<C-t>": false,
+      "z": false,
+      "<C-n>": false
+    },
+    "vim.insertModeKeyBindings": [
+      {
+        "before": [
+          "j",
+          "j"
+        ],
+        "after": [
+          "<Esc>"
+        ]
+      }
+    ],
+    "editor.minimap.enabled": false,
+    "files.autoSave": "afterDelay",
+    "terminal.integrated.persistentSessionReviveProcess": "never",
+    "workbench.colorTheme": "Blueberry Banana",
+    "editor.fontFamily": "Fira Code Retina Medium",
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 90,
+    "editor.renderLineHighlight": "none",
+    "editor.matchBrackets": "never",
+    "editor.occurrencesHighlight": "multiFile"
+  }
