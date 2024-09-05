@@ -1,5 +1,5 @@
 
-use-grammars = { only = [ "html"] }
+use-grammars = { only = ["html", "rust", "cpp", "c", "c-sharp", "css", "javascript", "jsx", "typescript"] }
 
 [language-server]
 deno-lsp = { command = "deno", args = ["lsp"]}
@@ -9,9 +9,15 @@ vscode-json-language-server = { command = "vscode-json-language-server", args = 
 pyright = { command = "pyright-langserver", args = ["--stdio"], config = {} }
 clangd = { command = "clangd", args = ["--query-driver=D:/mingw64/bin"] }
 ltex-ls = { command = "ltex-ls"}
-#omnisharp = { command = "OmniSharp", args = [ "--languageserver" ], timeout=50 }
-csharp-ls = { command = "csharp-ls", timeout=10000 }
+omnisharp = { command = "OmniSharp", args = [ "--languageserver" ], timeout=10000 }
+# csharp-ls = { command = "csharp-ls", timeout=10000 }
 haskell-language-server = { command = "haskell-language-server-wrapper", args = ["--lsp"] }
+zls = { command = "zls" }
+fsharp-ls = { command = "fsautocomplete", config = { AutomaticWorkspaceInit = true } }
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
 
 [language-server.rust-analyzer]
 command = "rust-analyzer"
@@ -29,7 +35,7 @@ auto-format = true
 name = "html"
 scope = "text.html.basic"
 injection-regex = "html"
-file-types = ["html", "htm", "shtml", "xhtml", "xht", "jsp", "asp", "aspx", "jshtm", "volt", "rhtml"]
+file-types = ["html", "htm", "shtml", "xhtml", "xht", "jsp", "asp", "aspx", "jshtm", "volt", "rhtml", "cshtml"]
 language-servers = [ "vscode-html-language-server" ]
 formatter = { command = 'prettier', args = ["--parser", "html"] }
 auto-format = false
@@ -60,11 +66,13 @@ auto-format = true
 [[language]]
 name = "typescript"
 language-servers = ["deno-lsp"]
+file-types=["ts", "tsx"]
 auto-format = true
 
 [[language]]
 name = "javascript"
 language-servers = ["deno-lsp"]
+file-types = ["js", "jsx"]
 auto-format = true
 
 [[language]]
@@ -149,14 +157,16 @@ indent = { tab-width = 2, unit = "  " }
 
 [[language]]
 name = "python"
-# roots = ["pyproject.toml", "setup.py", "Poetry.lock", ".git"]
-language-servers = ["pyright"]
-auto-format = true
-# config = ""
+scope = "source.python"
+injection-regex = "py(thon)?"
+file-types = ["py", "pyi", "py3", "pyw", "ptl", "rpy", "cpy", "ipy", "pyt", { glob = ".python_history" }, { glob = ".pythonstartup" }, { glob = ".pythonrc" }, { glob = "SConstruct" }, { glob = "SConscript" }]
+shebangs = ["python"]
+roots = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json"]
+language-servers = [ "ruff" ]
 
-[language.formatter]
-command = "ruff"
-args = ["format", "--quiet", "-"] 
+#comment-token = "#"
+#TODO: pyls needs utf-8 offsets
+# indent = { tab-width = 4, unit = "    " }
 
 [[language]]
 name = "cpp"
@@ -220,7 +230,7 @@ file-types = ["cs", "csx", "cake"]
 roots = ["sln", "csproj"]
 comment-token = "//"
 indent = { tab-width = 4, unit = "\t" }
-language-servers = [ "csharp-ls"]
+language-servers = [ "omnisharp"]
 auto-format = true
 
 [language.debugger]
@@ -283,3 +293,40 @@ roots = ["cabal.project", "Setup.hs"]
 indent = { tab-width = 2, unit = "  " }
 comment-token = "--"
 language-servers = [ "haskell-language-server" ]
+
+
+
+[[language]]
+name = "zig"
+scope = "source.zig"
+injection-regex = "zig"
+file-types = ["zig", "zon"]
+roots = ["build.zig"]
+auto-format = true
+comment-token = "//"
+language-servers = [ "zls" ]
+indent = { tab-width = 4, unit = "    " }
+formatter = { command = "zig" , args = ["fmt", "--stdin"] }
+
+
+[[grammar]]
+name = "zig"
+source = { git = "https://github.com/maxxnino/tree-sitter-zig", rev = "0d08703e4c3f426ec61695d7617415fff97029bd" }
+
+
+[[language]]
+name = "fsharp"
+scope = "source.fs"
+roots = ["sln", "fsproj"]
+injection-regex = "fsharp"
+file-types = ["fs", "fsx", "fsi", "fsscript"]
+comment-token = "//"
+block-comment-tokens = { start = "(*", end = "*)" }
+indent = { tab-width = 4, unit = "    " }
+auto-format = true
+formatter = { command = "fantomas"}
+language-servers = ["fsharp-ls"]
+
+[[grammar]]
+name = "fsharp"
+source = { git = "https://github.com/kaashyapan/tree-sitter-fsharp", rev = "18da392fd9bd5e79f357abcce13f61f3a15e3951" }
