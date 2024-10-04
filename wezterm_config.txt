@@ -102,6 +102,10 @@ config.keys = {
   { key = '0',          mods = 'CTRL',       action = act.ResetFontSize },
   { key = 'c',          mods = 'CTRL|SHIFT', action = act.CopyTo("Clipboard") },
   { key = 'v',          mods = 'CTRL|SHIFT', action = act.PasteFrom("Clipboard") },
+  { key = 't', mods = 'CTRL', action = act.SpawnTab("CurrentPaneDomain") },
+  { key = 'w', mods = 'CTRL', action = act.CloseCurrentTab {confirm=true}},
+  { key = 'p', mods = 'CTRL', action = act.ActivateTabRelative(-1)},
+  { key = 'n', mods = 'CTRL', action = act.ActivateTabRelative(1)},
 
   -- workspace configs
   {
