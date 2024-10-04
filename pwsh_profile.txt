@@ -213,3 +213,8 @@ function Remove-DirectoriesForce {
 }
 
 Set-Alias -Name rifn -Value Remove-DirectoriesForce
+
+# to open files selected from fzf directly in helix
+function fzf-hx {
+    fzf --bind 'enter:execute(hx {})'
+}
