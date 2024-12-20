@@ -70,6 +70,16 @@ function Git-AddCommit {
 
 Set-Alias -Name gimmit -Value Git-AddCommit
 
+function Git-Add-Push-Commit {
+    param (
+        [string]$Message
+    )
+    git add .
+    git commit -m %Message
+    git push -u origin main
+}
+Set-Alias -Name gish -Value Git-Add-Push-Commit
+
 function Edit-Pwsh-Profile {
     $PwshProfilePath = Join-Path -Path "$HOME\Documents\PowerShell" -ChildPath "Profile.ps1"
     
