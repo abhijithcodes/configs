@@ -75,7 +75,7 @@ function Git-Add-Push-Commit {
         [string]$Message
     )
     git add .
-    git commit -m %Message
+    git commit -m $Message
     git push -u origin main
 }
 Set-Alias -Name gish -Value Git-Add-Push-Commit
