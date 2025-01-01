@@ -241,3 +241,17 @@ Set-Alias -Name rifn -Value Remove-DirectoriesForce
 function fzf-hx {
     fzf --bind 'enter:execute(hx {})'
 }
+
+# to delete the temp shada file( when nvim crashes it cannot overwrite this file)
+function Remove-ShadaTempNvim {
+    $tempFile = "C:\Users\Hp\AppData\Local\nvim-data\shada\main.shada.tmp.x"
+    if (Test-Path $tempFile) {
+        Remove-Item -Path $tempFile -Force
+        Write-Host "Temporary shada file removed successfully."
+    } else {
+        Write-Host "Temporary shada file does not exist."
+    }
+}
+
+# Set an alias for the function
+Set-Alias -Name shada-del -Value Remove-ShadaTempNvim
