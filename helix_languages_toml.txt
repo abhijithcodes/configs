@@ -93,7 +93,7 @@ injection-regex = "go"
 file-types = ["go"]
 roots = ["go.work", "go.mod"]
 auto-format = true
-comment-token = "//"
+#comment-token = "//"
 language-servers = [ "gopls"]
 #TODO: gopls needs utf-8 offsets?
 indent = { tab-width = 4, unit = "\t" }
@@ -108,7 +108,7 @@ scope = "source.gomod"
 injection-regex = "gomod"
 file-types = [{glob = "go.mod"}]
 auto-format = true
-comment-token = "//"
+#comment-token = "//"
 language-servers = [ "gopls" ]
 indent = { tab-width = 4, unit = "\t" }
 
@@ -121,7 +121,7 @@ name = "gotmpl"
 scope = "source.gotmpl"
 injection-regex = "gotmpl"
 file-types = ["gotmpl", "tmpl"]
-comment-token = "//"
+#comment-token = "//"
 formatter = { command = 'prettier', args = ["--parser", "html"] }
 auto-format = true
 language-servers = [ "gopls" ]
@@ -137,7 +137,7 @@ scope = "source.gowork"
 injection-regex = "gowork"
 file-types = [{glob = "go.work"}]
 auto-format = true
-comment-token = "//"
+#comment-token = "//"
 language-servers = [ "gopls" ]
 indent = { tab-width = 4, unit = "\t" }
 
@@ -174,7 +174,7 @@ scope = "source.cpp"
 injection-regex = "cpp"
 file-types = ["cc", "hh", "c++", "cpp", "hpp", "h", "ipp", "tpp", "cxx", "hxx", "ixx", "txx", "ino", "C", "H", "cu", "cuh", "cppm", "h++", "ii", "inl", { glob = ".hpp.in" }, { glob = ".h.in" }]
 roots = []
-comment-token = "//"
+#comment-token = "//"
 language-servers = [ "clangd" ]
 indent = { tab-width = 2, unit = "  " }
 auto-format = true
@@ -189,7 +189,7 @@ scope = "source.c"
 injection-regex = "c"
 file-types = ["c"] #TODO: ["h"]
 roots = []
-comment-token = "//"
+#comment-token = "//"
 language-servers = [ "clangd" ]
 indent = { tab-width = 2, unit = "  " }
 auto-format = true
@@ -214,7 +214,7 @@ scope = "source.make"
 file-types = ["Makefile", "makefile", "make", "mk", "mak", "GNUmakefile", "OCamlMakefile"]
 shebangs = ["make", "gmake"]
 injection-regex = "(make|makefile|Makefile|mk)"
-comment-token = "#"
+#comment-token = "#"
 indent = { tab-width = 4, unit = "\t" }
 
 [[grammar]]
@@ -228,7 +228,7 @@ scope = "source.csharp"
 injection-regex = "c-?sharp"
 file-types = ["cs", "csx", "cake"]
 roots = ["sln", "csproj"]
-comment-token = "//"
+#comment-token = "//"
 indent = { tab-width = 4, unit = "\t" }
 language-servers = [ "omnisharp"]
 auto-format = true
@@ -276,7 +276,7 @@ scope = "source.haskell"
 injection-regex = "haskell"
 file-types = ["hs", "hs-boot"]
 roots = ["Setup.hs", "stack.yaml", "cabal.project"]
-comment-token = "--"
+#comment-token = "--"
 language-servers = [ "haskell-language-server" ]
 indent = { tab-width = 2, unit = "  " }
 
@@ -291,7 +291,7 @@ scope = "source.cabal"
 file-types = [ "cabal" ]
 roots = ["cabal.project", "Setup.hs"]
 indent = { tab-width = 2, unit = "  " }
-comment-token = "--"
+#comment-token = "--"
 language-servers = [ "haskell-language-server" ]
 
 
@@ -303,7 +303,7 @@ injection-regex = "zig"
 file-types = ["zig", "zon"]
 roots = ["build.zig"]
 auto-format = true
-comment-token = "//"
+#comment-token = "//"
 language-servers = [ "zls" ]
 indent = { tab-width = 4, unit = "    " }
 formatter = { command = "zig" , args = ["fmt", "--stdin"] }
@@ -320,8 +320,8 @@ scope = "source.fs"
 roots = ["sln", "fsproj"]
 injection-regex = "fsharp"
 file-types = ["fs", "fsx", "fsi", "fsscript"]
-comment-token = "//"
-block-comment-tokens = { start = "(*", end = "*)" }
+#comment-token = "//"
+#block-comment-tokens = { start = "(*", end = "*)" }
 indent = { tab-width = 4, unit = "    " }
 auto-format = true
 formatter = { command = "fantomas"}
