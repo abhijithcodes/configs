@@ -1,12 +1,15 @@
-theme = "nightfox"
+theme = "starlight"
+# theme = "nightfox"
+# theme = "doom_acario_dark"
 # theme = "papercolor-light"
 
 [editor]
 bufferline = "always"
+default-line-ending = "crlf"
 
 [editor.lsp]
 display-messages = true
-auto-signature-help = true
+auto-signature-help = false
 
 [editor.soft-wrap]
 enable = true
@@ -15,7 +18,7 @@ enable = true
 insert = "bar"
 
 [editor.file-picker]
-hidden = false
+hidden = true
 
 [keys.insert.j]
 k = "normal_mode" # Maps `jk` to exit insert mode
@@ -30,13 +33,14 @@ C-s = ":w"
 C-z = "save_selection"
 C-k = "kill_to_line_end"
 C-e = ":theme everforest_light"
+C-j = "save_selection"
 
 [keys.insert]
 C-i = "delete_char_backward"
 C-o = "delete_char_forward"
 C-d = "delete_word_backward"
 C-f = "delete_word_forward"
-C-s = "save_selection"
+# C-s = "save_selection"
 C-l = "move_char_right"
 C-h = "move_char_left"
 
