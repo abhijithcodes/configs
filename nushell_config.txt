@@ -43,3 +43,9 @@ def gish [message: string] {
   git commit -m $message
   git push -u origin main
 }
+
+# go up directories
+alias up = cd ..
+
+#neovim alias
+alias vim = nvim
