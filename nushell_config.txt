@@ -27,6 +27,37 @@ starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.n
 #adding zoxide support
 source ~/.zoxide.nu
 
+#adding support for duplicate tabs in windows terminal
+
+def before_prompt [] {
+    # Get current path
+    let current_path = $env.PWD
+    
+    # Construct the prompt string with ANSI escape sequences
+    # ESC character is \u{001b} or \x1b
+    let esc = "\u{001b}"
+    let bell = "\u{0007}"  # bell character
+    
+    mut prompt = $"($esc)]9;12$bell"
+    
+    # Add the current path if we're in the filesystem
+    if ($current_path | path exists) {
+        let path_prompt = $"($esc)]9;9;\"($current_path | str replace -a '\"' '\\\"')\"($esc)\\"
+        $prompt = $prompt + $path_prompt
+    }
+    
+    # Write to terminal without newline
+    print -n $prompt
+}
+
+$env.config = {
+  hooks: {
+    pre_prompt: [
+      before_prompt
+    ]
+  }
+}
+
 #remove welcome message
 $env.config.show_banner = false
 
@@ -49,3 +80,15 @@ alias up = cd ..
 
 #neovim alias
 alias vim = nvim
+
+# measure the time taken for a command to run
+# a closure can be passed to the function using {}
+# eg usage: time-it { cargo run }
+def time-it [block: closure] {
+  let start = (date now)
+  do $block
+  let end = (date now)
+  let duration = ($end - $start)
+  print $"Command took ($duration) to execute."
+}
+
