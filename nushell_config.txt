@@ -97,3 +97,6 @@ def edit-helix-theme [] {
   hx ~\AppData\Roaming\helix\themes\mytheme.toml
 }
 
+def hx-no-lsp [path: string] {
+  hx --config D:/helix-no-lsp/config.toml $path
+}
