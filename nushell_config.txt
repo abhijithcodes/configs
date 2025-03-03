@@ -92,3 +92,8 @@ def time-it [block: closure] {
   print $"Command took ($duration) to execute."
 }
 
+#edit the mytheme file in helix theme config
+def edit-helix-theme [] {
+  hx ~\AppData\Roaming\helix\themes\mytheme.toml
+}
+
