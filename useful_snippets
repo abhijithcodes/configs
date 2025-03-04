@@ -1,0 +1,5 @@
+/* publish as single file executable */
+dotnet publish -c Release -r win-x64 --self-contained /p:PublishSingleFile=true /p:PublishTrimmed=true
+
+/* publish with dll files */
+dotnet publish -c Release -r win-x64 --self-contained
