@@ -79,7 +79,7 @@ def gish [message: string] {
 alias up = cd ..
 
 #neovim alias
-alias vim = nvim
+# alias vim = nvim
 
 # measure the time taken for a command to run
 # a closure can be passed to the function using {}
@@ -100,3 +100,16 @@ def edit-helix-theme [] {
 def hx-no-lsp [path: string] {
   hx --config D:/helix-no-lsp/config.toml $path
 }
+
+#env for neovim
+def --env launch_neovim [...args: string] {
+    with-env {
+        XDG_CONFIG_HOME: "D:\\Neovim\\config",
+        XDG_DATA_HOME: "D:\\Neovim\\data"
+    } {
+        ^nvim ...$args
+    }
+}
+#alias for neovim
+alias vim = launch_neovim
+alias nvim = launch_neovim
