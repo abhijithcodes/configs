@@ -113,3 +113,85 @@ def --env launch_neovim [...args: string] {
 #alias for neovim
 alias vim = launch_neovim
 alias nvim = launch_neovim
+
+#generate gitignore files
+
+
+def gitignore-csharp [] {
+  let gitignore_content = "# Ignore build outputs
+bin/
+obj/
+# Ignore package caches and installation folders
+.packages/
+packages/
+# Ignore Visual Studio temporary files and user-specific settings
+.vs/
+*.userprefs
+*.suo
+*.sln.docstates
+# Ignore test results
+TestResults/
+# Ignore ReSharper caches (optional)
+_ReSharper.*
+# Ignore NuGet package restore folder (if applicable - newer projects use central cache)
+# packages/
+# Ignore any local user secrets
+**/appsettings.Development.json
+**/usersecrets.json
+# Ignore RIDER IDE data
+.idea/
+# Ignore any generated code or build artifacts specific to certain tools
+**/GeneratedCode/
+**/out/"
+
+  $gitignore_content | save .gitignore
+  echo "Generated .gitignore file for C# projects."
+}
+
+
+def gitignore-golang [] {
+  let gitignore_content = "# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with 'go test -c'
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# Binary output directories
+bin/
+dist/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.local
+
+# Debug files
+debug
+
+# MacOS files
+.DS_Store
+
+# Log files
+*.log"
+
+  $gitignore_content | save .gitignore
+  echo "Generated .gitignore file for Go projects."
+}
